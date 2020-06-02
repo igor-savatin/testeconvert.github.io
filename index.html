@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+    <title>Converter</title>
+  </head>
+  <body>
+    <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+        <div class="row">
+            <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" style="left:100px;" href="#">Converter</a>
+        </div>
+    </nav>
+    
+    <div class="container-fluid">
+      <div class="row">
+        <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+            <div class="sidebar-sticky pt-3">
+              <ul class="nav flex-column">
+                <li class="nav-item">
+                  <a class="nav-link active" href="#">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                        Calculo de Margem
+                    <span class="sr-only">(current)</span>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>
+                    Outra
+                  </a>
+                </li>
+              </ul>
+            </div>
+        </nav>
+        <div style="margin:20px;">
+            <h1>Calcular Margem de Lucro</h1>
+            <form>
+            <div class="form-group row container">
+                <div class="container row" style="margin: 8px;"> 
+                    <label for="precoVenda" class="col-sm-3 col-form-label">Preço de venda:</label>
+                    <div class="col-sm-8">
+                      <input type="number"  class="form-control col-sm-3" min=0.1 id="precoVenda" placeholder="R$ 10,00">
+                    </div>
+                </div>
+                
+                <div class="container row" style="margin: 8px;"> 
+                    <label for="precoCusto" class="col-sm-3 col-form-label">Custo:</label>
+                    <div class="col-sm-9">
+                      <input type="number"  class="form-control col-sm-3" min=0.1 id="precoCusto" placeholder="R$ 7,00">
+                    </div>
+                </div>
+                <div class="container">
+                      <button type="button" id="btnCalcular" class="btn btn-primary btn-lg col-sm-6 " style="margin:10px 0">Calcular</button>
+                </div>
+            </div>
+            </form>
+            <div class="container row">
+                <label for="precoVenda" class="col-sm-3 col-form-label">Margem de lucro</label>
+                <div class="col-sm-3 row">
+                    <p id="resultMargem" style="padding:7px 15px;margin:5px 0;font-size: 20px;">0%</p>
+                   
+                    <div class="d-flex rounded" style="font-size: 2em">
+                    <div id="svg">
+                        <svg class="bi bi-circle-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="grey" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="8" cy="8" r="8"/>
+                        </svg>
+                    </div>
+                    
+                </div>
+                </div>
+            </div>
+        </div>
+        
+        
+      </div>
+    </div>
+    
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script>
+        function round(value, decimals) {
+            return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
+        }
+        document.getElementById("btnCalcular").addEventListener("click", function() {
+            var precoVenda = document.getElementById("precoVenda").value;
+            var precoCusto = document.getElementById("precoCusto").value;
+            var margem = round((1-(precoCusto/precoVenda))*100,2)
+            console.log("/"+precoCusto+"/")
+            if (!isNaN(margem) ||precoCusto!="" || precoVenda!="" ) {
+                document.getElementById("resultMargem").innerHTML = margem+" %";
+                if (margem>=0.1) {
+                    document.getElementById("svg").innerHTML ='<svg class="bi bi-arrow-up-circle-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="green" xmlns="http://www.w3.org/2000/svg">'
+                    +'<path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-10.646.354a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 6.207V11a.5.5 0 0 1-1 0V6.207L5.354 8.354z"/>'
+                    +'</svg>'
+                } else {
+                    document.getElementById("svg").innerHTML ='<svg class="bi bi-arrow-down-circle-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="red" xmlns="http://www.w3.org/2000/svg">'
+                    +'<path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 5a.5.5 0 0 0-1 0v4.793L5.354 7.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 9.793V5z"/>'
+                    +'</svg>'
+                }
+            } 
+            
+        }, false);
+    </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+  </body>
+</html>
